@@ -19,6 +19,7 @@ export default async function callback(params: {
   cookies: RequestInternal["cookies"]
   sessionStore: SessionStore
 }): Promise<ResponseInternal> {
+  console.log("CALLBACK CALLED")
   const { options, query, body, method, headers, sessionStore } = params
   const {
     provider,
@@ -32,6 +33,8 @@ export default async function callback(params: {
     session: { strategy: sessionStrategy, maxAge: sessionMaxAge },
     logger,
   } = options
+
+  console.log("Options = ", JSON.stringify(options, null, 2))
 
   const cookies: Cookie[] = []
 
@@ -95,6 +98,8 @@ export default async function callback(params: {
             account,
             profile: OAuthProfile,
           })
+          console.log("isAllowed=")
+          console.log(isAllowed)
           if (!isAllowed) {
             return { redirect: `${url}/error?error=AccessDenied`, cookies }
           } else if (typeof isAllowed === "string") {
@@ -163,9 +168,8 @@ export default async function callback(params: {
         // Note that the callback URL is preserved, so the journey can still be resumed
         if (isNewUser && pages.newUser) {
           return {
-            redirect: `${pages.newUser}${
-              pages.newUser.includes("?") ? "&" : "?"
-            }callbackUrl=${encodeURIComponent(callbackUrl)}`,
+            redirect: `${pages.newUser}${pages.newUser.includes("?") ? "&" : "?"
+              }callbackUrl=${encodeURIComponent(callbackUrl)}`,
             cookies,
           }
         }
@@ -301,9 +305,8 @@ export default async function callback(params: {
       // Note that the callback URL is preserved, so the journey can still be resumed
       if (isNewUser && pages.newUser) {
         return {
-          redirect: `${pages.newUser}${
-            pages.newUser.includes("?") ? "&" : "?"
-          }callbackUrl=${encodeURIComponent(callbackUrl)}`,
+          redirect: `${pages.newUser}${pages.newUser.includes("?") ? "&" : "?"
+            }callbackUrl=${encodeURIComponent(callbackUrl)}`,
           cookies,
         }
       }

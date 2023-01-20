@@ -151,6 +151,8 @@ async function AuthHandlerInternal<
             options,
             sessionStore,
           })
+          console.log("===AuthHandlerInternal: GET CALLBACK===")
+          console.log(JSON.stringify(callback, null, 2))
           if (callback.cookies) cookies.push(...callback.cookies)
           return { ...callback, cookies }
         }
@@ -233,6 +235,8 @@ async function AuthHandlerInternal<
             options,
             sessionStore,
           })
+          console.log("===AuthHandlerInternal: POST CALLBACK===")
+          console.log(JSON.stringify(callback, null, 2))
           if (callback.cookies) cookies.push(...callback.cookies)
           return { ...callback, cookies }
         }
